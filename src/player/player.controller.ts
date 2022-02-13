@@ -10,13 +10,14 @@ import {
 import { PlayerService } from './player.service';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
+import { Player as PlayerModel } from '@prisma/client';
 
 @Controller('player')
 export class PlayerController {
   constructor(private readonly playerService: PlayerService) {}
 
   @Post()
-  create(@Body() createPlayerDto: CreatePlayerDto) {
+  create(@Body() createPlayerDto: PlayerModel) {
     return this.playerService.create(createPlayerDto);
   }
 
