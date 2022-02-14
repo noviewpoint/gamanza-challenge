@@ -6,11 +6,14 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { GameService } from './game.service';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('game')
 @Controller('game')
 export class GameController {
   constructor(private readonly gameService: GameService) {}
@@ -21,8 +24,11 @@ export class GameController {
   }
 
   @Get()
-  findAll() {
-    return this.gameService.findAll();
+  findAll(@Query() query) {
+    return this.gameService.findAll({
+      skip: !isNaN(query.skip) ? Number(query.skip) : undefined,
+      limit: !isNaN(query.limit) ? Number(query.limit) : undefined,
+    });
   }
 
   @Get(':id')

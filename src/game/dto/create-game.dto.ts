@@ -13,11 +13,11 @@ export class CreateGameDto {
   @ApiProperty()
   @IsOptional()
   @IsDate()
-  startedOn: Date;
+  startedOn?: Date;
   @ApiProperty()
   @IsOptional()
   @IsDate()
-  endedOn: Date;
+  endedOn?: Date;
   @ApiProperty()
   @IsDefined()
   @IsString()
@@ -27,7 +27,7 @@ export class CreateGameDto {
   @IsString()
   description: string;
   @ApiProperty()
-  @IsDefined()
+  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   players: Player[];
