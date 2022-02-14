@@ -36,7 +36,7 @@ export class CreatePlayerDto {
   @ApiProperty()
   @IsDefined()
   @IsEmail()
-  email: Date;
+  email: string;
   @ApiProperty()
   @IsOptional()
   @IsBoolean()
@@ -46,7 +46,7 @@ export class CreatePlayerDto {
   @IsNumber()
   credits: number;
   @ApiProperty()
-  @IsDefined()
+  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   games: Game[];
