@@ -25,11 +25,13 @@ generator nestjsDto {
 }
 
 model Game {
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  id           Int      @id @default(autoincrement())
-  title        String   @unique @db.VarChar(255)
-  description  String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  startedOn    DateTime?
+  endedOn      DateTime?
+  id           Int       @id @default(autoincrement())
+  title        String    @unique @db.VarChar(255)
+  description  String
   players      Player[]
   picturesUrls String[]
 }
@@ -37,6 +39,7 @@ model Game {
 model Player {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  joinedOn   DateTime
   id         Int      @id @default(autoincrement())
   firstName  String   @db.VarChar(255)
   lastName   String   @db.VarChar(255)
@@ -45,6 +48,5 @@ model Player {
   email      String   @unique
   activated  Boolean? @default(false)
   credits    Decimal  @db.Money
-  Game       Game?    @relation(fields: [gameId], references: [id])
-  gameId     Int?
+  games      Game[]
 }

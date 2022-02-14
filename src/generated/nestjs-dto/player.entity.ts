@@ -4,6 +4,7 @@ import { Game } from './game.entity';
 export class Player {
   createdAt: Date;
   updatedAt: Date;
+  joinedOn: Date;
   id: number;
   firstName: string;
   lastName: string;
@@ -12,6 +13,5 @@ export class Player {
   email: string;
   activated: boolean | null;
   credits: Prisma.Decimal;
-  Game?: Game | null;
-  gameId: number | null;
+  games?: Game[];
 }

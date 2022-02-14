@@ -1,5 +1,7 @@
 export class CreateGameDto {
+  startedOn?: Date;
+  endedOn?: Date;
   title: string;
-  description?: string;
+  description: string;
   picturesUrls: string[];
 }

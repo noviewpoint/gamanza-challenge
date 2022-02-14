@@ -1,6 +1,7 @@
 import { Prisma } from '@prisma/client';
 
 export class CreatePlayerDto {
+  joinedOn: Date;
   firstName: string;
   lastName: string;
   middleName?: string;
