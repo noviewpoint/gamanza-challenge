@@ -45,6 +45,16 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## OpenAPI Swagger docs
+
+Start the app and visit http://localhost:3000/api
+
+## Database migrations
+```bash
+# generates SQL files and directly runs them against the database
+$ npx prisma migrate dev --name init
+```
+
 ## Test
 
 ```bash
