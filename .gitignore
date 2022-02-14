@@ -36,3 +36,6 @@ lerna-debug.log*
 
 # environment files
 *.env
+
+# request counter file
+requestsCounter.json

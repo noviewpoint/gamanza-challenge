@@ -6,6 +6,7 @@ import { PlayerModule } from './player/player.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import type { RedisClientOptions } from 'redis';
 import * as redisStore from 'cache-manager-redis-store';
+import { RequestsCounterInterceptor } from './requests-counter.interceptor';
 
 @Module({
   imports: [
@@ -24,6 +25,10 @@ import * as redisStore from 'cache-manager-redis-store';
   controllers: [AppController],
   providers: [
     // Only GET endpoints are cached.
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: RequestsCounterInterceptor,
+    },
     {
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor,
