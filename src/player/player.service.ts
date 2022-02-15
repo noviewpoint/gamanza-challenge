@@ -28,15 +28,33 @@ export class PlayerService {
   async findAll({
     skip,
     limit,
+    firstName,
+    lastName,
   }: {
     skip?: number;
     limit?: number;
+    firstName?: string;
+    lastName?: string;
   }): Promise<Player[]> {
-    try {
-      const players = await this.prisma.player.findMany({
-        skip,
-        take: limit,
+    const query = {
+      skip,
+      take: limit,
+      where: undefined,
+    };
+    if (firstName) {
+      query.where = {};
+      Object.assign(query.where, {
+        firstName: { contains: firstName, mode: 'insensitive' },
       });
+    }
+    if (lastName) {
+      query.where = query.where || {};
+      Object.assign(query.where, {
+        lastName: { contains: lastName, mode: 'insensitive' },
+      });
+    }
+    try {
+      const players = await this.prisma.player.findMany(query);
       return players.map((player) => {
         return {
           games: [],

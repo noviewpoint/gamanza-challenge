@@ -28,6 +28,9 @@ export class PlayerController {
     return this.playerService.findAll({
       skip: !isNaN(query.skip) ? Number(query.skip) : undefined,
       limit: !isNaN(query.limit) ? Number(query.limit) : undefined,
+      // can search by firstName and lastName (case insensitive)
+      firstName: query.firstName,
+      lastName: query.lastName,
     });
   }
 
