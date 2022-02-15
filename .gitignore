@@ -2,6 +2,9 @@
 /dist
 /node_modules
 
+# prisma auto generated interfaces
+src/generated/nestjs-dto
+
 # Logs
 logs
 *.log
