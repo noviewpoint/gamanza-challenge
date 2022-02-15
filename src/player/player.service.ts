@@ -29,6 +29,7 @@ export class PlayerService {
     try {
       const subscribedPlayer = await this.prisma.playersOnGames.createMany({
         data: gamesIds.map((gameId) => ({ playerId, gameId })),
+        skipDuplicates: true,
       });
       return subscribedPlayer;
     } catch (ex) {
