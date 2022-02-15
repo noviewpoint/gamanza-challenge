@@ -37,7 +37,7 @@ describe('PlayerService', () => {
   });
 
   it(`Return non existing player`, async () => {
-    const output = await service.findOne(123);
+    const output = await service.findOne(1);
     expect(output).toBeFalsy();
   });
 });
