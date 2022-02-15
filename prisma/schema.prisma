@@ -39,7 +39,7 @@ model Game {
 model Player {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  joinedOn   DateTime
+  joinedOn   DateTime @default(now())
   id         Int      @id @default(autoincrement())
   firstName  String   @db.VarChar(255)
   lastName   String   @db.VarChar(255)
@@ -47,6 +47,6 @@ model Player {
   bornDate   DateTime
   email      String   @unique
   activated  Boolean? @default(false)
-  credits    Decimal  @db.Money
+  credits    Decimal  @default(0) @db.Money
   games      Game[]
 }
