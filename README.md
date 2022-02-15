@@ -3,6 +3,7 @@
 </p>
 
 [circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
+
 [circleci-url]: https://circleci.com/gh/nestjs/nest
 
   <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
@@ -33,20 +34,29 @@ $ npm install
 ```
 
 ## Postgres
+
 Postgres database is required. To run Postgres inside Docker (install Docker beforehand), type:
+
 ```bash
 $ docker run --name some-postgres -e POSTGRES_PASSWORD=mysecretpassword -p 5432:5432 -d postgres
 ```
-This will pull Postgres image if you do not have it already installed and start the container. It will expose Postgres default port 5432.
+
+This will pull Postgres image if you do not have it already installed and start the container. It will expose Postgres
+default port 5432.
 
 ## Redis
+
 Redis database is required. To run Redis inside Docker (install Docker beforehand), type:
+
 ```bash
 $ docker run --name some-redis -p 6379:6379 -d redis
 ```
-This will pull Redis image if you do not have it already installed and start the container. It will expose Redis default port 6379.
+
+This will pull Redis image if you do not have it already installed and start the container. It will expose Redis default
+port 6379.
 
 ## Database migrations
+
 ```bash
 # generates SQL files and directly runs them against the database
 $ npx prisma migrate dev --name init
@@ -84,7 +94,8 @@ $ npm run test:cov
 
 ## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If
+you'd like to join them, please [read more here](https://docs.nestjs.com/support).
 
 ## Stay in touch
 

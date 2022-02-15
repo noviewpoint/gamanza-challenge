@@ -1,5 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { PlayerService } from './player.service';
+import { PrismaService } from '../prisma.service';
 
 describe('PlayerService', () => {
   let service: PlayerService;

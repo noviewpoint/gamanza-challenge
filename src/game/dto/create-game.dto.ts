@@ -1,10 +1,10 @@
 import {
-  IsString,
   IsArray,
-  ValidateNested,
-  IsDefined,
   IsDate,
+  IsDefined,
   IsOptional,
+  IsString,
+  ValidateNested,
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Player } from '../../generated/nestjs-dto/player.entity';
