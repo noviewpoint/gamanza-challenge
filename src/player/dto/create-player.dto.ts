@@ -1,6 +1,5 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
-  IsArray,
   IsBoolean,
   IsDateString,
   IsDefined,
@@ -8,15 +7,18 @@ import {
   IsNumber,
   IsOptional,
   IsString,
-  ValidateNested,
 } from 'class-validator';
-import { Game } from '../../game/entities/game.entity';
 
 export class CreatePlayerDto {
   @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsDateString()
   joinedOn: Date;
+  @ApiProperty()
+  @IsDefined()
+  @IsEmail()
+  email: string;
   @ApiProperty()
   @IsDefined()
   @IsString()
@@ -26,6 +28,7 @@ export class CreatePlayerDto {
   @IsString()
   lastName: string;
   @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   middleName?: string;
@@ -34,20 +37,14 @@ export class CreatePlayerDto {
   @IsDateString()
   bornDate: Date;
   @ApiProperty()
-  @IsDefined()
-  @IsEmail()
-  email: string;
-  @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsBoolean()
   activated: boolean;
   @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsNumber()
   credits: number;
-  @ApiProperty()
-  @IsOptional()
-  @IsArray()
-  @ValidateNested({ each: true })
-  games: Game[];
+  // player dto should not have games
 }

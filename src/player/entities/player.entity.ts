@@ -5,12 +5,12 @@ export class Player {
   updatedAt?: Date;
   joinedOn?: Date;
   id: number;
+  email: string;
   firstName: string;
   lastName: string;
   middleName?: string;
   bornDate: Date;
-  email: string;
   activated: boolean;
   credits: number;
-  games: Game[];
+  games?: Game[];
 }

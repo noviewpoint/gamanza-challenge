@@ -8,6 +8,6 @@ export class Game {
   id: number;
   title: string;
   description: string;
-  players: Player[];
   picturesUrls: string[];
+  players?: Player[];
 }

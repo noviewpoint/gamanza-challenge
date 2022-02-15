@@ -2,22 +2,21 @@ import { Injectable } from '@nestjs/common';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { PrismaService } from '../prisma.service';
-import { Prisma } from '@prisma/client';
 import { Game } from './entities/game.entity';
+import { FindGameDto } from './dto/find-game.dto';
 
 @Injectable()
 export class GameService {
   constructor(private prisma: PrismaService) {}
 
   async create(createGameDto: CreateGameDto): Promise<Game> {
-    const data = { ...createGameDto };
     try {
       const game = await this.prisma.game.create({
-        data,
+        data: createGameDto,
       });
-      return { players: [], ...game };
+      return game;
     } catch (ex) {
-      return ex.toString();
+      return ex.message.toString();
     }
   }
 
@@ -25,11 +24,8 @@ export class GameService {
     skip,
     limit,
     title,
-  }: {
-    skip?: number;
-    limit?: number;
-    title?: string;
-  }): Promise<Game[]> {
+    playerId,
+  }: FindGameDto): Promise<Game[]> {
     const query = {
       skip,
       take: limit,
@@ -41,13 +37,23 @@ export class GameService {
         title: { contains: title, mode: 'insensitive' },
       });
     }
+    if (playerId) {
+      query.where = query.where || {};
+      Object.assign(query.where, {
+        players: {
+          some: {
+            player: {
+              id: playerId,
+            },
+          },
+        },
+      });
+    }
     try {
       const games = await this.prisma.game.findMany(query);
-      return games.map((game) => {
-        return { players: [], ...game };
-      });
+      return games;
     } catch (ex) {
-      return ex.toString();
+      return ex.message.toString();
     }
   }
 
@@ -59,23 +65,22 @@ export class GameService {
         },
       });
       if (game) {
-        return { players: [], ...game };
+        return game;
       }
     } catch (ex) {
-      return ex.toString();
+      return ex.message.toString();
     }
   }
 
   async update(id: number, updateGameDto: UpdateGameDto): Promise<Game> {
-    const data = { ...updateGameDto } as Prisma.GameUpdateInput;
     try {
       const game = await this.prisma.game.update({
-        data,
+        data: updateGameDto,
         where: { id },
       });
-      return { players: [], ...game };
+      return game;
     } catch (ex) {
-      return ex.toString();
+      return ex.message.toString();
     }
   }
 
@@ -84,9 +89,9 @@ export class GameService {
       const game = await this.prisma.game.delete({
         where: { id },
       });
-      return { players: [], ...game };
+      return game;
     } catch (ex) {
-      return ex.toString();
+      return ex.message.toString();
     }
   }
 }

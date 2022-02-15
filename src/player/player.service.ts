@@ -2,26 +2,54 @@ import { Injectable } from '@nestjs/common';
 import { CreatePlayerDto } from './dto/create-player.dto';
 import { UpdatePlayerDto } from './dto/update-player.dto';
 import { PrismaService } from '../prisma.service';
-import { Prisma } from '@prisma/client';
 import { Player } from './entities/player.entity';
+import { SubscribePlayerDto } from './dto/subscribe-player.dto';
+import { FindPlayerDto } from './dto/find-player.dto';
 
 @Injectable()
 export class PlayerService {
   constructor(private prisma: PrismaService) {}
 
   async create(createPlayerDto: CreatePlayerDto): Promise<Player> {
-    const data = { ...createPlayerDto };
     try {
       const player = await this.prisma.player.create({
-        data,
+        data: createPlayerDto,
       });
       return {
-        games: [],
         ...player,
         credits: player.credits as unknown as number,
       };
     } catch (ex) {
-      return ex.toString();
+      return ex.message.toString();
+    }
+  }
+
+  async subscribeToGame(subscribePlayerDto: SubscribePlayerDto) {
+    const { playerId, gamesIds } = subscribePlayerDto;
+    try {
+      const subscribedPlayer = await this.prisma.playersOnGames.createMany({
+        data: gamesIds.map((gameId) => ({ playerId, gameId })),
+      });
+      return subscribedPlayer;
+    } catch (ex) {
+      return ex.message.toString();
+    }
+  }
+
+  async unsubscribeFromGame(subscribePlayerDto: SubscribePlayerDto) {
+    const { playerId, gamesIds } = subscribePlayerDto;
+    try {
+      const unsubscribedPlayer = await this.prisma.playersOnGames.deleteMany({
+        where: {
+          playerId: playerId,
+          gameId: {
+            in: gamesIds,
+          },
+        },
+      });
+      return unsubscribedPlayer;
+    } catch (ex) {
+      return ex.message.toString();
     }
   }
 
@@ -30,12 +58,8 @@ export class PlayerService {
     limit,
     firstName,
     lastName,
-  }: {
-    skip?: number;
-    limit?: number;
-    firstName?: string;
-    lastName?: string;
-  }): Promise<Player[]> {
+    gameId,
+  }: FindPlayerDto): Promise<Player[]> {
     const query = {
       skip,
       take: limit,
@@ -53,17 +77,28 @@ export class PlayerService {
         lastName: { contains: lastName, mode: 'insensitive' },
       });
     }
+    if (gameId) {
+      query.where = query.where || {};
+      Object.assign(query.where, {
+        games: {
+          some: {
+            game: {
+              id: gameId,
+            },
+          },
+        },
+      });
+    }
     try {
       const players = await this.prisma.player.findMany(query);
       return players.map((player) => {
         return {
-          games: [],
           ...player,
           credits: player.credits as unknown as number,
         };
       });
     } catch (ex) {
-      return ex.toString();
+      return ex.message.toString();
     }
   }
 
@@ -76,30 +111,27 @@ export class PlayerService {
       });
       if (player) {
         return {
-          games: [],
           ...player,
           credits: player.credits as unknown as number,
         };
       }
     } catch (ex) {
-      return ex.toString();
+      return ex.message.toString();
     }
   }
 
   async update(id: number, updatePlayerDto: UpdatePlayerDto): Promise<Player> {
-    const data = { ...updatePlayerDto } as Prisma.PlayerUpdateInput;
     try {
       const player = await this.prisma.player.update({
-        data,
+        data: updatePlayerDto,
         where: { id },
       });
       return {
-        games: [],
         ...player,
         credits: player.credits as unknown as number,
       };
     } catch (ex) {
-      return ex.toString();
+      return ex.message.toString();
     }
   }
 
@@ -109,12 +141,11 @@ export class PlayerService {
         where: { id },
       });
       return {
-        games: [],
         ...player,
         credits: player.credits as unknown as number,
       };
     } catch (ex) {
-      return ex.toString();
+      return ex.message.toString();
     }
   }
 }

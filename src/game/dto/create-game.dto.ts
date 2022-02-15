@@ -4,17 +4,17 @@ import {
   IsDefined,
   IsOptional,
   IsString,
-  ValidateNested,
 } from 'class-validator';
-import { ApiProperty } from '@nestjs/swagger';
-import { Player } from '../../generated/nestjs-dto/player.entity';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class CreateGameDto {
   @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsDateString()
   startedOn?: Date;
   @ApiProperty()
+  @ApiPropertyOptional()
   @IsOptional()
   @IsDateString()
   endedOn?: Date;
@@ -27,13 +27,8 @@ export class CreateGameDto {
   @IsString()
   description: string;
   @ApiProperty()
-  @IsOptional()
-  @IsArray()
-  @ValidateNested({ each: true })
-  players: Player[];
-  @ApiProperty()
   @IsDefined()
   @IsArray()
-  @IsString({ each: true })
   picturesUrls: string[];
+  // game dto should not have players
 }

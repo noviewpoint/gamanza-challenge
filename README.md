@@ -71,6 +71,7 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
 (Since this is a simple test assigment I didnt create much tests).
 
 ## Support

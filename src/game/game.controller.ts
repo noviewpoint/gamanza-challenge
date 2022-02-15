@@ -9,6 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { GameService } from './game.service';
+import { FindGameDto } from './dto/find-game.dto';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { ApiTags } from '@nestjs/swagger';
@@ -24,13 +25,10 @@ export class GameController {
   }
 
   @Get()
-  findAll(@Query() query) {
-    return this.gameService.findAll({
-      skip: !isNaN(query.skip) ? Number(query.skip) : undefined,
-      limit: !isNaN(query.limit) ? Number(query.limit) : undefined,
-      // can search by title (case insensitive)
-      title: query.title,
-    });
+  findAll(@Query() findGameDto: FindGameDto) {
+    // can search by title (case insensitive)
+    // can query players by game
+    return this.gameService.findAll(findGameDto);
   }
 
   @Get(':id')
