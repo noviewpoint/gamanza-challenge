@@ -1,6 +1,6 @@
 import {
   IsArray,
-  IsDate,
+  IsDateString,
   IsDefined,
   IsOptional,
   IsString,
@@ -12,11 +12,11 @@ import { Player } from '../../generated/nestjs-dto/player.entity';
 export class CreateGameDto {
   @ApiProperty()
   @IsOptional()
-  @IsDate()
+  @IsDateString()
   startedOn?: Date;
   @ApiProperty()
   @IsOptional()
-  @IsDate()
+  @IsDateString()
   endedOn?: Date;
   @ApiProperty()
   @IsDefined()

@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
   IsBoolean,
-  IsDate,
+  IsDateString,
   IsDefined,
   IsEmail,
   IsNumber,
@@ -15,7 +15,7 @@ import { Game } from '../../game/entities/game.entity';
 export class CreatePlayerDto {
   @ApiProperty()
   @IsOptional()
-  @IsDate()
+  @IsDateString()
   joinedOn: Date;
   @ApiProperty()
   @IsDefined()
@@ -30,8 +30,8 @@ export class CreatePlayerDto {
   @IsString()
   middleName?: string;
   @ApiProperty()
-  @IsOptional()
-  @IsDate()
+  @IsDefined()
+  @IsDateString()
   bornDate: Date;
   @ApiProperty()
   @IsDefined()
