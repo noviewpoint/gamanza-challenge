@@ -28,6 +28,8 @@ export class GameController {
     return this.gameService.findAll({
       skip: !isNaN(query.skip) ? Number(query.skip) : undefined,
       limit: !isNaN(query.limit) ? Number(query.limit) : undefined,
+      // can search by title (case insensitive)
+      title: query.title,
     });
   }
 
