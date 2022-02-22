@@ -33,6 +33,16 @@ $ docker run --name some-redis -p 6379:6379 -d redis
 This will pull Redis image if you do not have it already installed and start the container. It will expose Redis default
 port 6379.
 
+## Environment variables
+
+Create .env file in root.
+
+Following variables must be set in this file before you start the application:
+
+```bash
+DATABASE_URL=
+```
+
 ## Database migrations and ORM changes to models
 
 ```bash
@@ -45,6 +55,9 @@ $ npx prisma migrate dev --name init
 ## Running the app
 
 ```bash
+# build the app (create distribution folder)
+$ nest build
+
 # development
 $ npm run start
 
@@ -73,18 +86,3 @@ $ npm run test:cov
 ```
 
 (Since this is a simple test assigment I didnt create much tests).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If
-you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
